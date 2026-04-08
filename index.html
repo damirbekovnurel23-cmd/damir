@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║   ФИНАНСОВЫЙ ИИ-АССИСТЕНТ ДЛЯ МОЛОДЁЖИ КЫРГЫЗСТАНА          ║
+  ║   Файл: index.html                                           ║
+  ║   Описание: Главная HTML-структура приложения                ║
+  ║   Автор: AI-разработка для молодёжи KG                       ║
+  ╚══════════════════════════════════════════════════════════════╝
+
+  Этот файл содержит разметку интерфейса чатбота.
+  Структура страницы:
+    1. <head>   — мета-теги, подключение шрифтов и стилей
+    2. <body>   — само приложение: сайдбар + основной чат
+-->
+<html lang="ru">
+<head>
+  <!-- Кодировка и адаптивность для мобильных устройств -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO и описание приложения -->
+  <meta name="description" content="Финансовый ИИ-ассистент для молодёжи Кыргызстана — советы по бюджету, сбережениям и инвестициям." />
+  <meta name="theme-color" content="#0d0f14" />
+
+  <title>Damir bot KG — Финансовый ИИ-ассистент KG</title>
+
+  <!-- Google Fonts: Syne (заголовки) + Manrope (текст) -->
+  <!-- Syne — геометричный, современный, идеально для бренда -->
+  <!-- Manrope — читаемый, дружелюбный, хорош для чата -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Manrope:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Основной файл стилей -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!--
+    ═══════════════════════════════════════════
+    ФОНОВЫЕ ДЕКОРАТИВНЫЕ ЭЛЕМЕНТЫ
+    Создают атмосферу: геометрические орнаменты
+    вдохновлены традиционным кыргызским узором
+    ═══════════════════════════════════════════
+  -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb--1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb--2" aria-hidden="true"></div>
+
+  <!--
+    ═══════════════════════════════════════════
+    КОРНЕВОЙ КОНТЕЙНЕР ПРИЛОЖЕНИЯ
+    Весь UI живёт внутри .app-shell
+    Flex-контейнер: сайдбар + основная панель
+    ═══════════════════════════════════════════
+  -->
+  <div class="app-shell" id="appShell">
+
+    <!-- ──────────────────────────────────────
+         САЙДБАР — История чатов и настройки
+         На мобильных скрывается, открывается
+         кнопкой-гамбургером
+    ────────────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar" role="complementary" aria-label="История чатов">
+
+      <!-- Шапка сайдбара: логотип + кнопка закрыть (мобайл) -->
+      <div class="sidebar__header">
+        <div class="sidebar__logo">
+          <!-- Иконка монеты — символ финансов -->
+          <span class="sidebar__logo-icon" aria-hidden="true">₸</span>
+          <div class="sidebar__logo-text">
+            <span class="sidebar__logo-name">Damir chorni<br>
+            <span class="sidebar__logo-tagline">помощник в финансах
+          </div>
+        </div>
+        <!-- Кнопка закрытия сайдбара на мобильных -->
+        <button
+          class="sidebar__close-btn"
+          id="sidebarCloseBtn"
+          aria-label="Закрыть боковое меню"
+          title="Закрыть"
+        >
+          <!-- SVG крестик -->
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M15 5L5 15M5 5l10 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Кнопка «Новый чат» — создаёт новую сессию -->
+      <button class="new-chat-btn" id="newChatBtn" aria-label="Начать новый чат">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Новый чат
+      </button>
+
+      <!--
+        Список истории чатов.
+        Заполняется динамически через JavaScript (app.js).
+        Каждый элемент — одна сессия разговора.
+      -->
+      <nav class="chat-history" id="chatHistory" aria-label="История разговоров">
+        <span class="chat-history__label">Недавние</span>
+        <!-- Элементы истории вставляются сюда через JS -->
+        <ul class="chat-history__list" id="chatHistoryList" role="list">
+          <!-- Пустое состояние (показывается когда нет чатов) -->
+          <li class="chat-history__empty" id="historyEmpty">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <path d="M4 8h24M4 16h16M4 24h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <span>История пуста</span>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Подвал сайдбара: версия + подсказки -->
+      <div class="sidebar__footer">
+        <div class="sidebar__tip">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M7 6v4M7 4.5v.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          Спроси о бюджете, вкладах, кредитах или сбережениях
+        </div>
+        <span class="sidebar__version">v1.0 · Groq + LLaMA 4</span>
+      </div>
+    </aside>
+
+    <!-- Оверлей для закрытия сайдбара кликом по фону (мобайл) -->
+    <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+    <!-- ──────────────────────────────────────
+         ОСНОВНАЯ ПАНЕЛЬ ЧАТА
+         Содержит: шапку, область сообщений,
+         приветственный экран и поле ввода
+    ────────────────────────────────────────── -->
+    <main class="chat-panel" id="chatPanel" role="main">
+
+      <!-- Шапка чата: кнопка меню + заголовок + действия -->
+      <header class="chat-header">
+        <!-- Кнопка-гамбургер для мобильных (открывает сайдбар) -->
+        <button
+          class="hamburger-btn"
+          id="hamburgerBtn"
+          aria-label="Открыть меню"
+          aria-expanded="false"
+          aria-controls="sidebar"
+        >
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <path d="M3 6h16M3 11h16M3 16h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <!-- Заголовок: название текущего чата -->
+        <div class="chat-header__title">
+          <div class="chat-header__status">
+            <!-- Зелёная точка — индикатор работы ИИ -->
+            <span class="status-dot" id="statusDot" aria-hidden="true"></span>
+            <span class="status-label" id="statusLabel">ИИ готов к работе</span>
+          </div>
+        </div>
+
+        <!-- Кнопка очистки текущего чата -->
+        <button
+          class="clear-btn"
+          id="clearBtn"
+          aria-label="Очистить текущий чат"
+          title="Очистить чат"
+        >
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <path d="M3 5h12l-1.5 10H4.5L3 5zM6 5V3h6v2M1 5h16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </header>
+
+      <!--
+        ОБЛАСТЬ ПРОКРУТКИ СООБЩЕНИЙ
+        Сюда добавляются пузырьки диалога.
+        overflow-y: auto — вертикальная прокрутка.
+      -->
+      <div class="messages-area" id="messagesArea" role="log" aria-live="polite" aria-label="Область сообщений">
+
+        <!--
+          ПРИВЕТСТВЕННЫЙ ЭКРАН
+          Показывается только когда нет сообщений.
+          Скрывается после первого сообщения.
+        -->
+        <div class="welcome-screen" id="welcomeScreen">
+          <!-- Анимированная иконка -->
+          <div class="welcome-screen__icon" aria-hidden="true">
+            <div class="welcome-screen__icon-inner">₸</div>
+            <div class="welcome-screen__icon-ring"></div>
+          </div>
+
+          <h1 class="welcome-screen__title">
+            Привет! Я <span class="highlight">АкчаБот</span>
+          </h1>
+          <p class="welcome-screen__subtitle">
+            Твой финансовый помощник для жизни в Кыргызстане.<br />
+            Спрашивай о деньгах — отвечу честно и по делу.
+          </p>
+
+          <!-- Быстрые подсказки — клик вставляет текст в поле ввода -->
+          <div class="quick-prompts" aria-label="Быстрые вопросы">
+            <button class="quick-prompt-btn" data-prompt="Как составить личный бюджет с нуля?">
+              <span class="quick-prompt-btn__icon">📊</span>
+              Личный бюджет
+            </button>
+            <button class="quick-prompt-btn" data-prompt="Как начать копить деньги при небольшой зарплате в Кыргызстане?">
+              <span class="quick-prompt-btn__icon">🏦</span>
+              Как копить
+            </button>
+            <button class="quick-prompt-btn" data-prompt="Расскажи про депозиты в банках Кыргызстана — где выгоднее?">
+              <span class="quick-prompt-btn__icon">💰</span>
+              Депозиты в KG
+            </button>
+            <button class="quick-prompt-btn" data-prompt="Как взять кредит и не попасть в долговую яму?">
+              <span class="quick-prompt-btn__icon">⚠️</span>
+              Кредиты: риски
+            </button>
+            <button class="quick-prompt-btn" data-prompt="Что такое инвестиции и с чего начать новичку в Кыргызстане?">
+              <span class="quick-prompt-btn__icon">📈</span>
+              Инвестиции
+            </button>
+            <button class="quick-prompt-btn" data-prompt="Как защитить деньги от инфляции сома?">
+              <span class="quick-prompt-btn__icon">🛡️</span>
+              Защита от инфляции
+            </button>
+          </div>
+        </div>
+
+        <!--
+          СПИСОК СООБЩЕНИЙ ЧАТА
+          Пузырьки добавляются сюда динамически через JS.
+          Каждый элемент имеет класс .message--user или .message--bot
+        -->
+        <div class="messages-list" id="messagesList" role="list"></div>
+
+      </div>
+
+      <!--
+        ФОРМА ВВОДА СООБЩЕНИЯ
+        Прикреплена к низу панели чата.
+        Содержит: textarea (автоматически расширяется) + кнопка отправки
+      -->
+      <div class="input-area">
+        <!-- Контейнер для возможных ошибок (появляется при проблемах с API) -->
+        <div class="error-banner" id="errorBanner" role="alert" aria-live="assertive" hidden>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M8 5v3.5M8 10.5v.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          <span id="errorText">Ошибка</span>
+          <button class="error-banner__close" id="errorCloseBtn" aria-label="Закрыть ошибку">✕</button>
+        </div>
+
+        <!-- Основное поле ввода + кнопка отправки -->
+        <div class="input-wrapper">
+          <!--
+            Textarea автоматически расширяется при наборе текста.
+            Логика расширения — в app.js (функция autoResize).
+            Отправка по Enter (без Shift) — тоже в app.js.
+          -->
+          <textarea
+            class="message-input"
+            id="messageInput"
+            placeholder="Спроси меня о финансах..."
+            rows="1"
+            maxlength="2000"
+            aria-label="Введите сообщение"
+            autocomplete="off"
+            spellcheck="true"
+          ></textarea>
+
+          <!-- Кнопка отправки — деактивируется во время загрузки -->
+          <button
+            class="send-btn"
+            id="sendBtn"
+            aria-label="Отправить сообщение"
+            title="Отправить (Enter)"
+            disabled
+          >
+            <!-- Иконка стрелки (состояние по умолчанию) -->
+            <svg class="send-btn__icon send-btn__icon--send" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M18 10L2 3l3 7-3 7 16-7z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+            <!-- Анимированный спиннер (состояние загрузки) -->
+            <svg class="send-btn__icon send-btn__icon--loading" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="2" stroke-dasharray="32" stroke-dashoffset="12"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Подсказка о горячих клавишах -->
+        <p class="input-hint">
+          <kbd>Enter</kbd> — отправить &nbsp;·&nbsp; <kbd>Shift+Enter</kbd> — перенос строки
+        </p>
+      </div>
+
+    </main>
+  </div><!-- /.app-shell -->
+
+  <!--
+    ═══════════════════════════════════════════
+    УВЕДОМЛЕНИЕ (TOAST) — всплывающее сообщение
+    Используется для коротких уведомлений:
+    «Чат сохранён», «Скопировано» и т.д.
+    Управляется через JS (функция showToast).
+    ═══════════════════════════════════════════
+  -->
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Основной JavaScript-файл приложения -->
+  <script src="app.js"></script>
+
+</body>
+</html>

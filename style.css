@@ -1,0 +1,1531 @@
+/*
+  ╔══════════════════════════════════════════════════════════════╗
+  ║   ФИНАНСОВЫЙ ИИ-АССИСТЕНТ — СТИЛИ                           ║
+  ║   Файл: style.css                                            ║
+  ║   Описание: Все визуальные стили приложения                  ║
+  ║                                                              ║
+  ║   Структура файла:                                           ║
+  ║     1.  CSS-переменные (дизайн-токены)                       ║
+  ║     2.  Сброс стилей и базовые настройки                     ║
+  ║     3.  Фоновые декоративные элементы                        ║
+  ║     4.  Оболочка приложения (app-shell)                      ║
+  ║     5.  Сайдбар (история чатов)                              ║
+  ║     6.  Кнопка «Новый чат»                                   ║
+  ║     7.  История чатов (список)                               ║
+  ║     8.  Основная панель чата                                 ║
+  ║     9.  Шапка чата                                           ║
+  ║     10. Область сообщений                                    ║
+  ║     11. Приветственный экран                                 ║
+  ║     12. Быстрые подсказки                                    ║
+  ║     13. Пузырьки сообщений                                   ║
+  ║     14. Анимация печатания (typing indicator)                ║
+  ║     15. Поле ввода                                           ║
+  ║     16. Кнопка отправки                                      ║
+  ║     17. Баннер ошибок                                        ║
+  ║     18. Toast-уведомления                                    ║
+  ║     19. Скроллбар                                            ║
+  ║     20. Анимации                                             ║
+  ║     21. Адаптивный дизайн (медиа-запросы)                    ║
+  ╚══════════════════════════════════════════════════════════════╝
+*/
+
+/* ═══════════════════════════════════════════════
+   1. CSS-ПЕРЕМЕННЫЕ (ДИЗАЙН-ТОКЕНЫ)
+   Централизованное управление цветами, шрифтами
+   и отступами. Меняй здесь — изменится везде.
+═══════════════════════════════════════════════ */
+:root {
+  /* --- Цветовая палитра --- */
+  /* Основной фон — очень тёмный сине-серый */
+  --bg-base:          #3053ad;
+  /* Фон сайдбара — чуть светлее основного */
+  --bg-sidebar:       #205c2a;
+  /* Фон карточек и панелей */
+  --bg-surface:       #161a22;
+  /* Фон приподнятых элементов (input, кнопки) */
+  --bg-elevated:      #1c2130;
+  /* Граница/разделитель */
+  --border:           rgba(0, 0, 0, 0.07);
+  --border-hover:     rgba(255, 255, 255, 0.13);
+
+  /* --- Акцентные цвета --- */
+  /* Янтарно-золотой — символ денег и Кыргызстана */
+  --accent:           #f0e000;
+  --accent-light:     #ffbf33;
+  --accent-dim:       rgba(240, 165, 0, 0.15);
+  --accent-glow:      rgba(240, 165, 0, 0.08);
+
+  /* --- Цвета текста --- */
+  --text-primary:     #d11161;
+  --text-secondary:   #91a88b;
+  --text-muted:       #a50f0f;
+  --text-on-accent:   #0d0f14;
+
+  /* --- Цвета состояний --- */
+  --success:          #34d399;
+  --success-dim:      rgba(52, 211, 153, 0.15);
+  --error:            #f87171;
+  --error-dim:        rgba(248, 113, 113, 0.12);
+  --warning:          #fbbf24;
+
+  /* --- Цвета сообщений --- */
+  /* Пузырьки пользователя */
+  --msg-user-bg:      linear-gradient(135deg, #00f094 0%, #0016e0 100%);
+  --msg-user-text:    #0d0f14;
+  /* Пузырьки бота */
+  --msg-bot-bg:       #1743c9;
+  --msg-bot-border:   rgba(240, 165, 0, 0.12);
+  --msg-bot-text:     #e8ecf4;
+
+  /* --- Шрифты --- */
+  --font-display:     'Syne', sans-serif;      /* Заголовки, логотип */
+  --font-body:        'Manrope', sans-serif;   /* Основной текст, чат */
+
+  /* --- Размеры шрифтов --- */
+  --text-xs:    0.7rem;
+  --text-sm:    0.8rem;
+  --text-base:  0.9rem;
+  --text-md:    1rem;
+  --text-lg:    1.15rem;
+  --text-xl:    1.4rem;
+  --text-2xl:   1.8rem;
+  --text-3xl:   2.4rem;
+
+  /* --- Отступы и размеры --- */
+  --sidebar-width:    280px;
+  --header-height:    60px;
+  --input-max-height: 160px;
+  --radius-sm:        8px;
+  --radius-md:        12px;
+  --radius-lg:        18px;
+  --radius-xl:        24px;
+  --radius-full:      9999px;
+
+  /* --- Тени --- */
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md:  0 4px 20px rgba(0,0,0,0.4);
+  --shadow-lg:  0 8px 40px rgba(0,0,0,0.5);
+  --shadow-accent: 0 0 20px rgb(240, 0, 72);
+
+  /* --- Переходы --- */
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow:   400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* ═══════════════════════════════════════════════
+   2. СБРОС СТИЛЕЙ И БАЗОВЫЕ НАСТРОЙКИ
+═══════════════════════════════════════════════ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Плавная прокрутка для всей страницы */
+html {
+  scroll-behavior: smooth;
+  /* Предотвращаем скачок при появлении скроллбара */
+  scrollbar-gutter: stable;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  min-height: 100dvh;
+  overflow: hidden; /* Прокрутка только внутри областей */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Убираем стандартные стили у кнопок */
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  transition: var(--transition-normal);
+}
+
+/* Убираем стандартные стили у ссылок */
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Список без маркеров */
+ul, ol {
+  list-style: none;
+}
+
+/* Изображения на всю ширину */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+
+/* ═══════════════════════════════════════════════
+   3. ФОНОВЫЕ ДЕКОРАТИВНЫЕ ЭЛЕМЕНТЫ
+   Создают глубину и атмосферу страницы
+═══════════════════════════════════════════════ */
+
+/* Сетка на фоне — имитирует цифровое пространство */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  /* SVG-паттерн сетки через data URI */
+  background-image:
+    linear-gradient(rgba(0, 81, 255, 0.733) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180, 25, 25, 0.37) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none; /* Не мешает кликам */
+}
+
+/* Размытые цветные пятна (орбы) — создают свечение */
+.bg-orb {
+  position: fixed;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  opacity: 0.5;
+  animation: orbFloat 12s ease-in-out infinite;
+}
+
+/* Первый орб — золотой, в левом верхнем углу */
+.bg-orb--1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255, 0, 0, 0.12) 0%, transparent 70%);
+  top: -200px;
+  left: -200px;
+  animation-delay: 0s;
+}
+
+/* Второй орб — синий, в правом нижнем углу */
+.bg-orb--2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgb(255, 38, 0) 0%, transparent 70%);
+  bottom: -150px;
+  right: -100px;
+  animation-delay: -6s;
+}
+
+
+/* ═══════════════════════════════════════════════
+   4. ОБОЛОЧКА ПРИЛОЖЕНИЯ
+   Flex-контейнер, занимает весь экран
+═══════════════════════════════════════════════ */
+.app-shell {
+  display: flex;
+  height: 100dvh;
+  position: relative;
+  z-index: 1; /* Поверх фоновых декораций */
+}
+
+
+/* ═══════════════════════════════════════════════
+   5. САЙДБАР — История чатов
+═══════════════════════════════════════════════ */
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  transition: transform var(--transition-slow);
+  position: relative;
+  z-index: 10;
+}
+
+/* Шапка сайдбара */
+.sidebar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 18px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+/* Логотип */
+.sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Иконка в логотипе — монета с акцентным цветом */
+.sidebar__logo-icon {
+  width: 38px;
+  height: 38px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(240, 165, 0, 0.3);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.sidebar__logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar__logo-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-md);
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.sidebar__logo-tagline {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+}
+
+/* Кнопка закрытия сайдбара (только на мобайл) */
+.sidebar__close-btn {
+  display: none; /* Скрыта на десктопе */
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sidebar__close-btn:hover {
+  background: var(--border-hover);
+  color: var(--text-primary);
+}
+
+
+/* ═══════════════════════════════════════════════
+   6. КНОПКА «НОВЫЙ ЧАТ»
+═══════════════════════════════════════════════ */
+.new-chat-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px;
+  padding: 10px 14px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(240, 165, 0, 0.25);
+  border-radius: var(--radius-md);
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  text-align: left;
+  letter-spacing: 0.01em;
+  transition: var(--transition-normal);
+}
+
+.new-chat-btn:hover {
+  background: rgba(240, 165, 0, 0.22);
+  border-color: rgba(240, 165, 0, 0.4);
+  box-shadow: var(--shadow-accent);
+  transform: translateY(-1px);
+}
+
+.new-chat-btn:active {
+  transform: translateY(0);
+}
+
+
+/* ═══════════════════════════════════════════════
+   7. ИСТОРИЯ ЧАТОВ — Список сессий
+═══════════════════════════════════════════════ */
+.chat-history {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Метка "Недавние" над списком */
+.chat-history__label {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 8px 6px 4px;
+  font-weight: 600;
+}
+
+.chat-history__list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Элемент истории — одна сессия чата */
+.chat-history__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  border: 1px solid transparent;
+  gap: 8px;
+}
+
+.chat-history__item:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border);
+}
+
+/* Активная сессия выделена акцентом */
+.chat-history__item--active {
+  background: var(--accent-dim);
+  border-color: rgba(240, 165, 0, 0.2);
+}
+
+.chat-history__item--active .chat-history__item-text {
+  color: var(--accent-light);
+}
+
+/* Текст названия сессии (обрезается многоточием) */
+.chat-history__item-text {
+  flex: 1;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+/* Кнопка удаления сессии из истории */
+.chat-history__item-delete {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: var(--transition-fast);
+  flex-shrink: 0;
+  font-size: 0.7rem;
+}
+
+.chat-history__item:hover .chat-history__item-delete {
+  opacity: 1;
+}
+
+.chat-history__item-delete:hover {
+  background: var(--error-dim);
+  color: var(--error);
+}
+
+/* Пустое состояние — нет истории */
+.chat-history__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 30px 16px;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+.chat-history__empty svg {
+  opacity: 0.3;
+}
+
+/* Подвал сайдбара */
+.sidebar__footer {
+  padding: 14px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Блок подсказки в подвале */
+.sidebar__tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.sidebar__tip svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  opacity: 0.5;
+}
+
+/* Версия приложения */
+.sidebar__version {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+/* Оверлей сайдбара на мобильных (затемняет основной контент) */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.sidebar-overlay--visible {
+  opacity: 1;
+}
+
+
+/* ═══════════════════════════════════════════════
+   8. ОСНОВНАЯ ПАНЕЛЬ ЧАТА
+═══════════════════════════════════════════════ */
+.chat-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  min-width: 0; /* Важно для flex: предотвращает выход за рамки */
+}
+
+
+/* ═══════════════════════════════════════════════
+   9. ШАПКА ЧАТА
+═══════════════════════════════════════════════ */
+.chat-header {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px 0 20px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(13, 15, 20, 0.85);
+  backdrop-filter: blur(20px);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 5;
+}
+
+/* Кнопка-гамбургер (мобайл) */
+.hamburger-btn {
+  display: none; /* Скрыта на десктопе */
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: var(--transition-fast);
+}
+
+.hamburger-btn:hover {
+  background: var(--border);
+  color: var(--text-primary);
+}
+
+/* Заголовок — занимает всё оставшееся место */
+.chat-header__title {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Индикатор статуса ИИ */
+.chat-header__status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+/* Анимированная точка статуса */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* Состояние "загрузка" — точка оранжевая и мигает */
+.status-dot--loading {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulse 0.8s ease-in-out infinite;
+}
+
+.status-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Кнопка очистки чата */
+.clear-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.clear-btn:hover {
+  background: var(--error-dim);
+  color: var(--error);
+}
+
+
+/* ═══════════════════════════════════════════════
+   10. ОБЛАСТЬ СООБЩЕНИЙ
+═══════════════════════════════════════════════ */
+.messages-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Контейнер списка сообщений */
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 20px;
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+
+/* ═══════════════════════════════════════════════
+   11. ПРИВЕТСТВЕННЫЙ ЭКРАН
+   Показывается когда нет сообщений
+═══════════════════════════════════════════════ */
+.welcome-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 24px 20px;
+  max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
+  animation: fadeInUp 0.6s ease both;
+}
+
+/* Анимированная иконка */
+.welcome-screen__icon {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 24px;
+}
+
+.welcome-screen__icon-inner {
+  width: 80px;
+  height: 80px;
+  background: var(--accent-dim);
+  border: 2px solid rgba(240, 165, 0, 0.35);
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 800;
+  position: relative;
+  z-index: 1;
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+/* Кольцо вокруг иконки — пульсирующее свечение */
+.welcome-screen__icon-ring {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(240, 165, 0, 0.15);
+  animation: ringPulse 2.5s ease-in-out infinite;
+}
+
+.welcome-screen__title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 12px;
+  letter-spacing: -0.03em;
+}
+
+/* Выделенный текст в заголовке */
+.highlight {
+  color: var(--accent);
+  position: relative;
+}
+
+.welcome-screen__subtitle {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+
+/* ═══════════════════════════════════════════════
+   12. БЫСТРЫЕ ПОДСКАЗКИ (кнопки-подсказки)
+═══════════════════════════════════════════════ */
+.quick-prompts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+/* Кнопка быстрой подсказки */
+.quick-prompt-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  text-align: left;
+  font-weight: 500;
+  transition: var(--transition-normal);
+  cursor: pointer;
+  line-height: 1.3;
+}
+
+.quick-prompt-btn:hover {
+  background: var(--bg-elevated);
+  border-color: rgba(240, 165, 0, 0.3);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.quick-prompt-btn:active {
+  transform: translateY(0);
+}
+
+.quick-prompt-btn__icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  /* Небольшая «прыгающая» анимация при наведении */
+  transition: transform var(--transition-normal);
+}
+
+.quick-prompt-btn:hover .quick-prompt-btn__icon {
+  transform: scale(1.2);
+}
+
+
+/* ═══════════════════════════════════════════════
+   13. ПУЗЫРЬКИ СООБЩЕНИЙ
+═══════════════════════════════════════════════ */
+
+/* Обёртка одного сообщения */
+.message {
+  display: flex;
+  gap: 20px;
+  animation: messageAppear 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
+  max-width: 100%;
+}
+
+/* Сообщения пользователя выровнены вправо */
+.message--user {
+  flex-direction: row-reverse;
+}
+
+/* Аватар отправителя */
+.message__avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Аватар бота — золотой */
+.message--bot .message__avatar {
+  background: var(--accent-dim);
+  border: 1px solid rgba(240, 165, 0, 0.25);
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 800;
+}
+
+/* Аватар пользователя — тёмный */
+.message--user .message__avatar {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+/* Колонка: контент + метаданные */
+.message__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: calc(100% - 46px); /* Не перекрывает аватар */
+}
+
+.message--user .message__body {
+  align-items: flex-end;
+}
+
+/* Пузырёк сообщения */
+.message__bubble {
+  padding: 9px 9px;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  line-height: 1.69;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+
+/* Пузырёк сообщения пользователя */
+.message--user .message__bubble {
+  background: var(--msg-user-bg);
+  color: var(--msg-user-text);
+  padding: 10px 20px;
+  font-weight: 500;
+  transform: skewX(-10deg);
+  border-radius: 12px;
+}
+
+/* Текст внутри — выравниваем обратно */
+.message--user .message__bubble * {
+  transform: skewX(10deg);
+}
+
+/* Пузырёк сообщения бота */
+.message--bot .message__bubble {
+  background: var(--msg-bot-bg);
+  color: var(--msg-bot-text);
+  border: 1px solid var(--msg-bot-border);
+  border-bottom-left-radius: var(--radius-sm); /* «хвостик» */
+  box-shadow: var(--shadow-sm);
+}
+
+/* Временная метка сообщения */
+.message__time {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+  padding: 0 4px;
+}
+
+/* Контент внутри пузырька бота (Markdown-разметка) */
+.message__content p {
+  margin-bottom: 8px;
+}
+.message__content p:last-child {
+  margin-bottom: 0;
+}
+
+.message__content strong {
+  color: var(--accent-light);
+  font-weight: 600;
+}
+
+.message__content em {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Блок кода */
+.message__content code {
+  background: rgba(0,0,0,0.4);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85em;
+  color: var(--accent-light);
+}
+
+.message__content pre {
+  background: rgba(0,0,0,0.4);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+  margin: 8px 0;
+  border: 1px solid var(--border);
+}
+
+.message__content pre code {
+  background: none;
+  padding: 0;
+}
+
+/* Списки */
+.message__content ul,
+.message__content ol {
+  padding-left: 18px;
+  margin: 8px 0;
+  list-style: revert; /* Возвращаем маркеры для контента чата */
+}
+
+.message__content li {
+  margin-bottom: 4px;
+}
+
+/* Заголовки в ответах бота */
+.message__content h1,
+.message__content h2,
+.message__content h3 {
+  font-family: var(--font-display);
+  color: var(--accent-light);
+  margin: 12px 0 6px;
+  line-height: 1.3;
+}
+
+.message__content h1 { font-size: var(--text-xl); }
+.message__content h2 { font-size: var(--text-lg); }
+.message__content h3 { font-size: var(--text-md); }
+
+/* Горизонтальный разделитель */
+.message__content hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 19px 0;
+}
+
+
+
+/* ═══════════════════════════════════════════════
+   14. ИНДИКАТОР ПЕЧАТАНИЯ БОТА (typing indicator)
+   Три точки, которые по очереди подпрыгивают
+═══════════════════════════════════════════════ */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 14px 16px;
+  height: 48px;
+}
+
+.typing-indicator__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.5;
+  animation: typingBounce 1.2s ease-in-out infinite;
+}
+
+/* Каждая точка запускается с задержкой */
+.typing-indicator__dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator__dot:nth-child(3) { animation-delay: 0.4s; }
+
+
+/* ═══════════════════════════════════════════════
+   15. ПОЛЕ ВВОДА (Input Area)
+═══════════════════════════════════════════════ */
+.input-area {
+  padding: 12px 16px 14px;
+  border-top: 1px solid var(--border);
+  background: rgba(13, 15, 20, 0.85);
+  backdrop-filter: blur(20px);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 820px;
+  width: 100%;
+  margin: 0 auto;
+  /* Растягиваем на всю ширину, но ограничиваем max-width */
+  align-self: stretch;
+}
+
+/* Обёртка textarea + кнопка */
+.input-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 10px 10px 10px 16px;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+/* Акцент при фокусе на поле ввода */
+.input-wrapper:focus-within {
+  border-color: rgba(240, 165, 0, 0.4);
+  box-shadow: 0 0 0 3px rgba(240, 165, 0, 0.06);
+}
+
+/* Поле ввода текста */
+.message-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  /* Ограничиваем максимальную высоту (JS будет автоматически расширять) */
+  max-height: var(--input-max-height);
+  overflow-y: auto;
+  /* Убираем стандартный вид на iOS */
+   -webkit-apparance: none;
+}
+ 
+.message-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Убираем лишний отступ на разных браузерах */
+.message-input::-webkit-scrollbar {
+  width: 4px;
+}
+
+.message-input::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+/* Подсказка о горячих клавишах */
+.input-hint {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-align: center;
+  opacity: 0.6;
+  letter-spacing: 0.02em;
+}
+
+/* Стилизация <kbd> тегов */
+.input-hint kbd {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-family: var(--font-body);
+  font-size: inherit;
+}
+
+
+/* ═══════════════════════════════════════════════
+   16. КНОПКА ОТПРАВКИ
+═══════════════════════════════════════════════ */
+.send-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(#756bff);
+  color: var( #3bf65a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background var(--transition-normal),
+               transform var(--transition-fast),
+              opacity var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  
+}
+.send-btn:hover:not(:disabled) {
+  background: var(#27945d)
+  transform scale(1.05);
+} 
+
+.send-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+/* Деактивированное состояние */
+.send-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Иконки кнопки: стрелка и спиннер */
+.send-btn__icon {
+  position: absolute;
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+
+/* По умолчанию показываем стрелку */
+.send-btn__icon--send {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Спиннер скрыт */
+.send-btn__icon--loading {
+  opacity: 0;
+  transform: scale(0.7);
+  animation: spin 1s linear infinite;
+}
+
+/* Состояние загрузки: скрываем стрелку, показываем спиннер */
+.send-btn--loading .send-btn__icon--send {
+  opacity: 0;
+  transform: scale(0.7);
+}
+
+.send-btn--loading .send-btn__icon--loading {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+/* ═══════════════════════════════════════════════
+   17. БАННЕР ОШИБОК
+   Появляется при проблемах с API или сетью
+═══════════════════════════════════════════════ */
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--error-dim);
+  border: 1px solid rgb(138, 113, 248);
+  border-radius: var(--radius-md);
+  color: var(--error);
+  font-size: var(--text-sm);
+  animation: fadeInDown 0.3s ease both;
+}
+
+.error-banner svg {
+  flex-shrink: 0;
+}
+
+.error-banner span {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.error-banner__close {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--error);
+  opacity: 0.7;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  transition: var(--transition-fast);
+}
+
+.error-banner__close:hover {
+  opacity: 1;
+  background: rgba(248, 113, 113, 0.15);
+}
+
+
+/* ═══════════════════════════════════════════════
+   18. TOAST-УВЕДОМЛЕНИЯ
+   Всплывающие сообщения в правом нижнем углу
+═══════════════════════════════════════════════ */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-lg);
+  /* По умолчанию скрыт */
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  transition: opacity var(--transition-normal),
+              transform var(--transition-normal);
+  pointer-events: none;
+  max-width: 320px;
+}
+
+/* Видимое состояние toast */
+.toast--visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Стили для разных типов уведомлений */
+.toast--success {
+  border-color: rgba(52, 211, 153, 0.3);
+  color: var(--success);
+}
+
+.toast--error {
+  border-color: rgba(248, 113, 113, 0.3);
+  color: var(--error);
+}
+
+
+/* ═══════════════════════════════════════════════
+   19. СТИЛИЗАЦИЯ СКРОЛЛБАРА
+   Кастомный скроллбар в стиле приложения
+═══════════════════════════════════════════════ */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-full);
+  transition: background var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-hover);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+
+/* ═══════════════════════════════════════════════
+   20. АНИМАЦИИ (keyframes)
+═══════════════════════════════════════════════ */
+
+/* Плавное появление снизу */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Плавное появление сверху */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Появление сообщения */
+@keyframes messageAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Покачивание иконки на приветственном экране */
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+/* Пульсация кольца вокруг иконки */
+@keyframes ringPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.15;
+    transform: scale(1.15);
+  }
+}
+
+/* Пульсация точки статуса */
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px currentColor; }
+  50%       { opacity: 0.5; box-shadow: 0 0 2px currentColor; }
+}
+
+/* Прыгающие точки (typing indicator) */
+@keyframes typingBounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+/* Вращение (спиннер кнопки) */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Плавное покачивание фоновых орбов */
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -20px) scale(1.05); }
+  66%       { transform: translate(-20px, 30px) scale(0.97); }
+}
+
+
+/* ═══════════════════════════════════════════════
+   21. АДАПТИВНЫЙ ДИЗАЙН (Responsive Design)
+   Точки перелома:
+     — > 768px: десктопный вид (сайдбар всегда открыт)
+     — ≤ 768px: мобильный вид (сайдбар выезжает)
+═══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* На мобайл сайдбар становится выезжающей панелью */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    /* Скрыт за левым краем экрана */
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Когда сайдбар открыт — выезжает */
+  .sidebar--open {
+    transform: translateX(0);
+  }
+
+  /* Показываем кнопку закрытия сайдбара */
+  .sidebar__close-btn {
+    display: flex;
+  }
+
+  /* Оверлей виден только на мобайл */
+  .sidebar-overlay {
+    display: block;
+  }
+
+  /* Показываем кнопку-гамбургер */
+  .hamburger-btn {
+    display: flex;
+  }
+
+  /* Адаптируем быстрые подсказки под мобайл */
+  .quick-prompts {
+    grid-template-columns: 1fr;
+  }
+
+  /* Уменьшаем заголовок приветственного экрана */
+  .welcome-screen__title {
+    font-size: var(--text-xl);
+  }
+
+  .welcome-screen {
+    padding: 24px 16px 16px;
+  }
+
+  /* Уменьшаем отступы в шапке */
+  .chat-header {
+    padding: 0 12px;
+  }
+
+  /* Уменьшаем отступы в поле ввода */
+  .input-area {
+    padding: 10px 12px 12px;
+  }
+
+  /* Сообщения без лишних отступов */
+  .messages-list {
+    padding: 0 12px;
+  }
+
+  /* Toast уведомления — на всю ширину снизу */
+  .toast {
+    bottom: 16px;
+    right: 12px;
+    left: 12px;
+    max-width: none;
+    text-align: center;
+  }
+}
+
+/* Очень маленькие экраны */
+@media (max-width: 380px) {
+  .welcome-screen__title {
+    font-size: var(--text-lg);
+  }
+
+  .quick-prompt-btn {
+    font-size: 0.75rem;
+    padding: 10px 12px;
+  }
+}
+  .chat-header {
+    gap: 8px;
+  }/* Контейнер для пузырька бота + кнопки */
+.message-bot-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+/* Кнопка копирования */
+.copy-btn {
+  background: #e0e0e0;
+  border: none;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0.6;
+  line-height: 1;
+}
+
+.copy-btn:hover {
+  opacity: 1;
+  background: #d0d0d0;
+}
+
+.copy-btn:active {
+  transform: scale(0.95);
+}
+
+/* Чтобы пузырек бота оставался таким же, как был */
+.message--bot .message__bubble {
+  background: var(--msg-bot-bg, #f0f0f0);
+  color: var(--msg-bot-text, #333);
+  border-radius: 18px 18px 18px 4px;
+  padding: 8px 12px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+/* Сообщение пользователя (без кнопки) */
+.message--user .message__bubble {
+  background: var(--msg-user-bg, #007aff);
+  color: var(--msg-user-text, #fff);
+  border-radius: 18px 4px 18px 18px;
+  padding: 8px 12px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+/* Общий контейнер для сообщений */
+.message {
+  margin-bottom: 12px;
+  display: flex;
+}
+
+.message--user {
+  justify-cont 
+  /* Контейнер для сообщения бота с кнопкой */
+.message-bot-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+}
+/* Стиль кнопки копирования */
+.copy-btn {
+  background: #e0e0e0;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0.7;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.copy-btn:hover {
+  opacity: 1;
+  background: #d0d0d0;
+  transform: scale(1.05);
+}
+
+.copy-btn:active {
+  transform: scale(0.95);
+}
