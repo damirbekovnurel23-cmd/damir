@@ -2,63 +2,31 @@
   ╔══════════════════════════════════════════════════════════════╗
   ║   ФИНАНСОВЫЙ ИИ-АССИСТЕНТ — СТИЛИ                           ║
   ║   Файл: style.css                                            ║
-  ║   Описание: Все визуальные стили приложения                  ║
-  ║                                                              ║
-  ║   Структура файла:                                           ║
-  ║     1.  CSS-переменные (дизайн-токены)                       ║
-  ║     2.  Сброс стилей и базовые настройки                     ║
-  ║     3.  Фоновые декоративные элементы                        ║
-  ║     4.  Оболочка приложения (app-shell)                      ║
-  ║     5.  Сайдбар (история чатов)                              ║
-  ║     6.  Кнопка «Новый чат»                                   ║
-  ║     7.  История чатов (список)                               ║
-  ║     8.  Основная панель чата                                 ║
-  ║     9.  Шапка чата                                           ║
-  ║     10. Область сообщений                                    ║
-  ║     11. Приветственный экран                                 ║
-  ║     12. Быстрые подсказки                                    ║
-  ║     13. Пузырьки сообщений                                   ║
-  ║     14. Анимация печатания (typing indicator)                ║
-  ║     15. Поле ввода                                           ║
-  ║     16. Кнопка отправки                                      ║
-  ║     17. Баннер ошибок                                        ║
-  ║     18. Toast-уведомления                                    ║
-  ║     19. Скроллбар                                            ║
-  ║     20. Анимации                                             ║
-  ║     21. Адаптивный дизайн (медиа-запросы)                    ║
   ╚══════════════════════════════════════════════════════════════╝
 */
 
 /* ═══════════════════════════════════════════════
    1. CSS-ПЕРЕМЕННЫЕ (ДИЗАЙН-ТОКЕНЫ)
-   Централизованное управление цветами, шрифтами
-   и отступами. Меняй здесь — изменится везде.
 ═══════════════════════════════════════════════ */
 :root {
   /* --- Цветовая палитра --- */
-  /* Основной фон — очень тёмный сине-серый */
-  --bg-base:          #3053ad;
-  /* Фон сайдбара — чуть светлее основного */
-  --bg-sidebar:       #205c2a;
-  /* Фон карточек и панелей */
+  --bg-base:          #0d0f14;
+  --bg-sidebar:       #111318;
   --bg-surface:       #161a22;
-  /* Фон приподнятых элементов (input, кнопки) */
   --bg-elevated:      #1c2130;
-  /* Граница/разделитель */
-  --border:           rgba(0, 0, 0, 0.07);
+  --border:           rgba(255, 255, 255, 0.07);
   --border-hover:     rgba(255, 255, 255, 0.13);
 
   /* --- Акцентные цвета --- */
-  /* Янтарно-золотой — символ денег и Кыргызстана */
-  --accent:           #f0e000;
+  --accent:           #f0a500;
   --accent-light:     #ffbf33;
   --accent-dim:       rgba(240, 165, 0, 0.15);
   --accent-glow:      rgba(240, 165, 0, 0.08);
 
   /* --- Цвета текста --- */
-  --text-primary:     #d11161;
-  --text-secondary:   #91a88b;
-  --text-muted:       #a50f0f;
+  --text-primary:     #ffffff;
+  --text-secondary:   #b0b8d0;
+  --text-muted:       #6b7280;
   --text-on-accent:   #0d0f14;
 
   /* --- Цвета состояний --- */
@@ -69,17 +37,15 @@
   --warning:          #fbbf24;
 
   /* --- Цвета сообщений --- */
-  /* Пузырьки пользователя */
-  --msg-user-bg:      linear-gradient(135deg, #00f094 0%, #0016e0 100%);
+  --msg-user-bg:      linear-gradient(135deg, #f0a500 0%, #e08e00 100%);
   --msg-user-text:    #0d0f14;
-  /* Пузырьки бота */
-  --msg-bot-bg:       #1743c9;
+  --msg-bot-bg:       #1e2438;
   --msg-bot-border:   rgba(240, 165, 0, 0.12);
   --msg-bot-text:     #e8ecf4;
 
   /* --- Шрифты --- */
-  --font-display:     'Syne', sans-serif;      /* Заголовки, логотип */
-  --font-body:        'Manrope', sans-serif;   /* Основной текст, чат */
+  --font-display:     'Syne', sans-serif;
+  --font-body:        'Manrope', sans-serif;
 
   /* --- Размеры шрифтов --- */
   --text-xs:    0.7rem;
@@ -105,7 +71,7 @@
   --shadow-sm:  0 2px 8px rgba(0,0,0,0.3);
   --shadow-md:  0 4px 20px rgba(0,0,0,0.4);
   --shadow-lg:  0 8px 40px rgba(0,0,0,0.5);
-  --shadow-accent: 0 0 20px rgb(240, 0, 72);
+  --shadow-accent: 0 0 20px rgba(240, 165, 0, 0.2);
 
   /* --- Переходы --- */
   --transition-fast:   150ms ease;
@@ -125,10 +91,8 @@
   padding: 0;
 }
 
-/* Плавная прокрутка для всей страницы */
 html {
   scroll-behavior: smooth;
-  /* Предотвращаем скачок при появлении скроллбара */
   scrollbar-gutter: stable;
 }
 
@@ -139,12 +103,11 @@ body {
   font-size: var(--text-base);
   line-height: 1.6;
   min-height: 100dvh;
-  overflow: hidden; /* Прокрутка только внутри областей */
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Убираем стандартные стили у кнопок */
 button {
   cursor: pointer;
   border: none;
@@ -155,72 +118,48 @@ button {
   transition: var(--transition-normal);
 }
 
-/* Убираем стандартные стили у ссылок */
-a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* Список без маркеров */
 ul, ol {
   list-style: none;
-}
-
-/* Изображения на всю ширину */
-img {
-  max-width: 100%;
-  display: block;
 }
 
 
 /* ═══════════════════════════════════════════════
    3. ФОНОВЫЕ ДЕКОРАТИВНЫЕ ЭЛЕМЕНТЫ
-   Создают глубину и атмосферу страницы
 ═══════════════════════════════════════════════ */
-
-/* Сетка на фоне — имитирует цифровое пространство */
 .bg-grid {
   position: fixed;
   inset: 0;
   z-index: 0;
-  /* SVG-паттерн сетки через data URI */
   background-image:
-    linear-gradient(rgba(0, 81, 255, 0.733) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(180, 25, 25, 0.37) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 40px 40px;
-  pointer-events: none; /* Не мешает кликам */
+  pointer-events: none;
 }
 
-/* Размытые цветные пятна (орбы) — создают свечение */
 .bg-orb {
   position: fixed;
   z-index: 0;
   border-radius: 50%;
   filter: blur(120px);
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.4;
   animation: orbFloat 12s ease-in-out infinite;
 }
 
-/* Первый орб — золотой, в левом верхнем углу */
 .bg-orb--1 {
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(255, 0, 0, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(240, 165, 0, 0.15) 0%, transparent 70%);
   top: -200px;
   left: -200px;
   animation-delay: 0s;
 }
 
-/* Второй орб — синий, в правом нижнем углу */
 .bg-orb--2 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgb(255, 38, 0) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(100, 80, 255, 0.12) 0%, transparent 70%);
   bottom: -150px;
   right: -100px;
   animation-delay: -6s;
@@ -229,18 +168,17 @@ img {
 
 /* ═══════════════════════════════════════════════
    4. ОБОЛОЧКА ПРИЛОЖЕНИЯ
-   Flex-контейнер, занимает весь экран
 ═══════════════════════════════════════════════ */
 .app-shell {
   display: flex;
   height: 100dvh;
   position: relative;
-  z-index: 1; /* Поверх фоновых декораций */
+  z-index: 1;
 }
 
 
 /* ═══════════════════════════════════════════════
-   5. САЙДБАР — История чатов
+   5. САЙДБАР
 ═══════════════════════════════════════════════ */
 .sidebar {
   width: var(--sidebar-width);
@@ -256,7 +194,6 @@ img {
   z-index: 10;
 }
 
-/* Шапка сайдбара */
 .sidebar__header {
   display: flex;
   align-items: center;
@@ -266,14 +203,12 @@ img {
   flex-shrink: 0;
 }
 
-/* Логотип */
 .sidebar__logo {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-/* Иконка в логотипе — монета с акцентным цветом */
 .sidebar__logo-icon {
   width: 38px;
   height: 38px;
@@ -309,9 +244,8 @@ img {
   letter-spacing: 0.03em;
 }
 
-/* Кнопка закрытия сайдбара (только на мобайл) */
 .sidebar__close-btn {
-  display: none; /* Скрыта на десктопе */
+  display: none;
   width: 32px;
   height: 32px;
   border-radius: var(--radius-sm);
@@ -362,7 +296,7 @@ img {
 
 
 /* ═══════════════════════════════════════════════
-   7. ИСТОРИЯ ЧАТОВ — Список сессий
+   7. ИСТОРИЯ ЧАТОВ
 ═══════════════════════════════════════════════ */
 .chat-history {
   flex: 1;
@@ -373,7 +307,6 @@ img {
   gap: 2px;
 }
 
-/* Метка "Недавние" над списком */
 .chat-history__label {
   display: block;
   font-size: var(--text-xs);
@@ -390,7 +323,6 @@ img {
   gap: 2px;
 }
 
-/* Элемент истории — одна сессия чата */
 .chat-history__item {
   display: flex;
   align-items: center;
@@ -408,7 +340,6 @@ img {
   border-color: var(--border);
 }
 
-/* Активная сессия выделена акцентом */
 .chat-history__item--active {
   background: var(--accent-dim);
   border-color: rgba(240, 165, 0, 0.2);
@@ -418,7 +349,6 @@ img {
   color: var(--accent-light);
 }
 
-/* Текст названия сессии (обрезается многоточием) */
 .chat-history__item-text {
   flex: 1;
   font-size: var(--text-sm);
@@ -429,7 +359,6 @@ img {
   line-height: 1.3;
 }
 
-/* Кнопка удаления сессии из истории */
 .chat-history__item-delete {
   width: 24px;
   height: 24px;
@@ -453,7 +382,6 @@ img {
   color: var(--error);
 }
 
-/* Пустое состояние — нет истории */
 .chat-history__empty {
   display: flex;
   flex-direction: column;
@@ -469,7 +397,6 @@ img {
   opacity: 0.3;
 }
 
-/* Подвал сайдбара */
 .sidebar__footer {
   padding: 14px 16px;
   border-top: 1px solid var(--border);
@@ -479,7 +406,6 @@ img {
   flex-shrink: 0;
 }
 
-/* Блок подсказки в подвале */
 .sidebar__tip {
   display: flex;
   align-items: flex-start;
@@ -495,7 +421,6 @@ img {
   opacity: 0.5;
 }
 
-/* Версия приложения */
 .sidebar__version {
   font-size: 0.65rem;
   color: var(--text-muted);
@@ -504,7 +429,6 @@ img {
   letter-spacing: 0.04em;
 }
 
-/* Оверлей сайдбара на мобильных (затемняет основной контент) */
 .sidebar-overlay {
   display: none;
   position: fixed;
@@ -530,7 +454,7 @@ img {
   flex-direction: column;
   height: 100%;
   overflow: hidden;
-  min-width: 0; /* Важно для flex: предотвращает выход за рамки */
+  min-width: 0;
 }
 
 
@@ -551,9 +475,8 @@ img {
   z-index: 5;
 }
 
-/* Кнопка-гамбургер (мобайл) */
 .hamburger-btn {
-  display: none; /* Скрыта на десктопе */
+  display: none;
   width: 36px;
   height: 36px;
   border-radius: var(--radius-sm);
@@ -570,20 +493,17 @@ img {
   color: var(--text-primary);
 }
 
-/* Заголовок — занимает всё оставшееся место */
 .chat-header__title {
   flex: 1;
   min-width: 0;
 }
 
-/* Индикатор статуса ИИ */
 .chat-header__status {
   display: flex;
   align-items: center;
   gap: 7px;
 }
 
-/* Анимированная точка статуса */
 .status-dot {
   width: 8px;
   height: 8px;
@@ -594,7 +514,6 @@ img {
   flex-shrink: 0;
 }
 
-/* Состояние "загрузка" — точка оранжевая и мигает */
 .status-dot--loading {
   background: var(--accent);
   box-shadow: 0 0 8px var(--accent);
@@ -607,7 +526,6 @@ img {
   font-weight: 500;
 }
 
-/* Кнопка очистки чата */
 .clear-btn {
   width: 36px;
   height: 36px;
@@ -640,7 +558,6 @@ img {
   position: relative;
 }
 
-/* Контейнер списка сообщений */
 .messages-list {
   display: flex;
   flex-direction: column;
@@ -654,7 +571,6 @@ img {
 
 /* ═══════════════════════════════════════════════
    11. ПРИВЕТСТВЕННЫЙ ЭКРАН
-   Показывается когда нет сообщений
 ═══════════════════════════════════════════════ */
 .welcome-screen {
   display: flex;
@@ -668,7 +584,6 @@ img {
   animation: fadeInUp 0.6s ease both;
 }
 
-/* Анимированная иконка */
 .welcome-screen__icon {
   position: relative;
   width: 80px;
@@ -694,7 +609,6 @@ img {
   animation: iconFloat 3s ease-in-out infinite;
 }
 
-/* Кольцо вокруг иконки — пульсирующее свечение */
 .welcome-screen__icon-ring {
   position: absolute;
   inset: -12px;
@@ -713,7 +627,6 @@ img {
   letter-spacing: -0.03em;
 }
 
-/* Выделенный текст в заголовке */
 .highlight {
   color: var(--accent);
   position: relative;
@@ -728,7 +641,7 @@ img {
 
 
 /* ═══════════════════════════════════════════════
-   12. БЫСТРЫЕ ПОДСКАЗКИ (кнопки-подсказки)
+   12. БЫСТРЫЕ ПОДСКАЗКИ
 ═══════════════════════════════════════════════ */
 .quick-prompts {
   display: grid;
@@ -737,7 +650,6 @@ img {
   width: 100%;
 }
 
-/* Кнопка быстрой подсказки */
 .quick-prompt-btn {
   display: flex;
   align-items: center;
@@ -771,7 +683,6 @@ img {
 .quick-prompt-btn__icon {
   font-size: 1.2rem;
   flex-shrink: 0;
-  /* Небольшая «прыгающая» анимация при наведении */
   transition: transform var(--transition-normal);
 }
 
@@ -783,8 +694,6 @@ img {
 /* ═══════════════════════════════════════════════
    13. ПУЗЫРЬКИ СООБЩЕНИЙ
 ═══════════════════════════════════════════════ */
-
-/* Обёртка одного сообщения */
 .message {
   display: flex;
   gap: 20px;
@@ -792,12 +701,10 @@ img {
   max-width: 100%;
 }
 
-/* Сообщения пользователя выровнены вправо */
 .message--user {
   flex-direction: row-reverse;
 }
 
-/* Аватар отправителя */
 .message__avatar {
   width: 34px;
   height: 34px;
@@ -810,7 +717,6 @@ img {
   margin-top: 2px;
 }
 
-/* Аватар бота — золотой */
 .message--bot .message__avatar {
   background: var(--accent-dim);
   border: 1px solid rgba(240, 165, 0, 0.25);
@@ -819,28 +725,25 @@ img {
   font-weight: 800;
 }
 
-/* Аватар пользователя — тёмный */
 .message--user .message__avatar {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   color: var(--text-secondary);
 }
 
-/* Колонка: контент + метаданные */
 .message__body {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  max-width: calc(100% - 46px); /* Не перекрывает аватар */
+  max-width: calc(100% - 46px);
 }
 
 .message--user .message__body {
   align-items: flex-end;
 }
 
-/* Пузырёк сообщения */
 .message__bubble {
   padding: 9px 9px;
   border-radius: var(--radius-lg);
@@ -851,31 +754,21 @@ img {
   max-width: 100%;
 }
 
-/* Пузырёк сообщения пользователя */
 .message--user .message__bubble {
   background: var(--msg-user-bg);
   color: var(--msg-user-text);
   padding: 10px 20px;
   font-weight: 500;
-  transform: skewX(-10deg);
-  border-radius: 12px;
 }
 
-/* Текст внутри — выравниваем обратно */
-.message--user .message__bubble * {
-  transform: skewX(10deg);
-}
-
-/* Пузырёк сообщения бота */
 .message--bot .message__bubble {
   background: var(--msg-bot-bg);
   color: var(--msg-bot-text);
   border: 1px solid var(--msg-bot-border);
-  border-bottom-left-radius: var(--radius-sm); /* «хвостик» */
+  border-bottom-left-radius: var(--radius-sm);
   box-shadow: var(--shadow-sm);
 }
 
-/* Временная метка сообщения */
 .message__time {
   font-size: 0.65rem;
   color: var(--text-muted);
@@ -883,10 +776,10 @@ img {
   padding: 0 4px;
 }
 
-/* Контент внутри пузырька бота (Markdown-разметка) */
 .message__content p {
   margin-bottom: 8px;
 }
+
 .message__content p:last-child {
   margin-bottom: 0;
 }
@@ -901,7 +794,6 @@ img {
   font-style: italic;
 }
 
-/* Блок кода */
 .message__content code {
   background: rgba(0,0,0,0.4);
   padding: 2px 6px;
@@ -925,19 +817,17 @@ img {
   padding: 0;
 }
 
-/* Списки */
 .message__content ul,
 .message__content ol {
   padding-left: 18px;
   margin: 8px 0;
-  list-style: revert; /* Возвращаем маркеры для контента чата */
+  list-style: revert;
 }
 
 .message__content li {
   margin-bottom: 4px;
 }
 
-/* Заголовки в ответах бота */
 .message__content h1,
 .message__content h2,
 .message__content h3 {
@@ -951,7 +841,6 @@ img {
 .message__content h2 { font-size: var(--text-lg); }
 .message__content h3 { font-size: var(--text-md); }
 
-/* Горизонтальный разделитель */
 .message__content hr {
   border: none;
   border-top: 1px solid var(--border);
@@ -959,10 +848,8 @@ img {
 }
 
 
-
 /* ═══════════════════════════════════════════════
-   14. ИНДИКАТОР ПЕЧАТАНИЯ БОТА (typing indicator)
-   Три точки, которые по очереди подпрыгивают
+   14. ИНДИКАТОР ПЕЧАТАНИЯ
 ═══════════════════════════════════════════════ */
 .typing-indicator {
   display: flex;
@@ -981,13 +868,12 @@ img {
   animation: typingBounce 1.2s ease-in-out infinite;
 }
 
-/* Каждая точка запускается с задержкой */
 .typing-indicator__dot:nth-child(2) { animation-delay: 0.2s; }
 .typing-indicator__dot:nth-child(3) { animation-delay: 0.4s; }
 
 
 /* ═══════════════════════════════════════════════
-   15. ПОЛЕ ВВОДА (Input Area)
+   15. ПОЛЕ ВВОДА
 ═══════════════════════════════════════════════ */
 .input-area {
   padding: 12px 16px 14px;
@@ -1001,11 +887,9 @@ img {
   max-width: 820px;
   width: 100%;
   margin: 0 auto;
-  /* Растягиваем на всю ширину, но ограничиваем max-width */
   align-self: stretch;
 }
 
-/* Обёртка textarea + кнопка */
 .input-wrapper {
   display: flex;
   align-items: flex-end;
@@ -1017,13 +901,11 @@ img {
   transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
 }
 
-/* Акцент при фокусе на поле ввода */
 .input-wrapper:focus-within {
   border-color: rgba(240, 165, 0, 0.4);
   box-shadow: 0 0 0 3px rgba(240, 165, 0, 0.06);
 }
 
-/* Поле ввода текста */
 .message-input {
   flex: 1;
   background: transparent;
@@ -1034,18 +916,14 @@ img {
   font-family: var(--font-body);
   font-size: var(--text-base);
   line-height: 1.5;
-  /* Ограничиваем максимальную высоту (JS будет автоматически расширять) */
   max-height: var(--input-max-height);
   overflow-y: auto;
-  /* Убираем стандартный вид на iOS */
-   -webkit-apparance: none;
 }
- 
+
 .message-input::placeholder {
   color: var(--text-muted);
 }
 
-/* Убираем лишний отступ на разных браузерах */
 .message-input::-webkit-scrollbar {
   width: 4px;
 }
@@ -1055,7 +933,6 @@ img {
   border-radius: 2px;
 }
 
-/* Подсказка о горячих клавишах */
 .input-hint {
   font-size: 0.65rem;
   color: var(--text-muted);
@@ -1064,7 +941,6 @@ img {
   letter-spacing: 0.02em;
 }
 
-/* Стилизация <kbd> тегов */
 .input-hint kbd {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
@@ -1082,54 +958,47 @@ img {
   width: 40px;
   height: 40px;
   border-radius: var(--radius-md);
-  background: var(#756bff);
-  color: var( #3bf65a);
+  background: var(--accent);
+  color: var(--text-on-accent);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background var(--transition-normal),
-               transform var(--transition-fast),
-              opacity var(--transition-normal);
+  transition: background var(--transition-normal), transform var(--transition-fast), opacity var(--transition-normal);
   position: relative;
   overflow: hidden;
-  
 }
+
 .send-btn:hover:not(:disabled) {
-  background: var(#27945d)
-  transform scale(1.05);
-} 
+  background: var(--accent-light);
+  transform: scale(1.05);
+}
 
 .send-btn:active:not(:disabled) {
   transform: scale(0.95);
 }
 
-/* Деактивированное состояние */
 .send-btn:disabled {
   opacity: 0.35;
   cursor: not-allowed;
 }
 
-/* Иконки кнопки: стрелка и спиннер */
 .send-btn__icon {
   position: absolute;
   transition: opacity var(--transition-normal), transform var(--transition-normal);
 }
 
-/* По умолчанию показываем стрелку */
 .send-btn__icon--send {
   opacity: 1;
   transform: scale(1);
 }
 
-/* Спиннер скрыт */
 .send-btn__icon--loading {
   opacity: 0;
   transform: scale(0.7);
   animation: spin 1s linear infinite;
 }
 
-/* Состояние загрузки: скрываем стрелку, показываем спиннер */
 .send-btn--loading .send-btn__icon--send {
   opacity: 0;
   transform: scale(0.7);
@@ -1143,7 +1012,6 @@ img {
 
 /* ═══════════════════════════════════════════════
    17. БАННЕР ОШИБОК
-   Появляется при проблемах с API или сетью
 ═══════════════════════════════════════════════ */
 .error-banner {
   display: flex;
@@ -1151,7 +1019,7 @@ img {
   gap: 8px;
   padding: 10px 14px;
   background: var(--error-dim);
-  border: 1px solid rgb(138, 113, 248);
+  border: 1px solid var(--error);
   border-radius: var(--radius-md);
   color: var(--error);
   font-size: var(--text-sm);
@@ -1189,7 +1057,6 @@ img {
 
 /* ═══════════════════════════════════════════════
    18. TOAST-УВЕДОМЛЕНИЯ
-   Всплывающие сообщения в правом нижнем углу
 ═══════════════════════════════════════════════ */
 .toast {
   position: fixed;
@@ -1203,23 +1070,19 @@ img {
   font-size: var(--text-sm);
   color: var(--text-primary);
   box-shadow: var(--shadow-lg);
-  /* По умолчанию скрыт */
   opacity: 0;
   transform: translateY(12px) scale(0.96);
-  transition: opacity var(--transition-normal),
-              transform var(--transition-normal);
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
   pointer-events: none;
   max-width: 320px;
 }
 
-/* Видимое состояние toast */
 .toast--visible {
   opacity: 1;
   transform: translateY(0) scale(1);
   pointer-events: auto;
 }
 
-/* Стили для разных типов уведомлений */
 .toast--success {
   border-color: rgba(52, 211, 153, 0.3);
   color: var(--success);
@@ -1232,8 +1095,7 @@ img {
 
 
 /* ═══════════════════════════════════════════════
-   19. СТИЛИЗАЦИЯ СКРОЛЛБАРА
-   Кастомный скроллбар в стиле приложения
+   19. СКРОЛЛБАР
 ═══════════════════════════════════════════════ */
 ::-webkit-scrollbar {
   width: 5px;
@@ -1253,7 +1115,6 @@ img {
   background: var(--border-hover);
 }
 
-/* Firefox */
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
@@ -1261,10 +1122,8 @@ img {
 
 
 /* ═══════════════════════════════════════════════
-   20. АНИМАЦИИ (keyframes)
+   20. АНИМАЦИИ
 ═══════════════════════════════════════════════ */
-
-/* Плавное появление снизу */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -1276,7 +1135,6 @@ img {
   }
 }
 
-/* Плавное появление сверху */
 @keyframes fadeInDown {
   from {
     opacity: 0;
@@ -1288,7 +1146,6 @@ img {
   }
 }
 
-/* Появление сообщения */
 @keyframes messageAppear {
   from {
     opacity: 0;
@@ -1300,13 +1157,11 @@ img {
   }
 }
 
-/* Покачивание иконки на приветственном экране */
 @keyframes iconFloat {
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(-6px); }
 }
 
-/* Пульсация кольца вокруг иконки */
 @keyframes ringPulse {
   0%, 100% {
     opacity: 0.6;
@@ -1318,214 +1173,7 @@ img {
   }
 }
 
-/* Пульсация точки статуса */
 @keyframes pulse {
   0%, 100% { opacity: 1; box-shadow: 0 0 6px currentColor; }
   50%       { opacity: 0.5; box-shadow: 0 0 2px currentColor; }
-}
-
-/* Прыгающие точки (typing indicator) */
-@keyframes typingBounce {
-  0%, 60%, 100% {
-    transform: translateY(0);
-    opacity: 0.4;
-  }
-  30% {
-    transform: translateY(-6px);
-    opacity: 1;
-  }
-}
-
-/* Вращение (спиннер кнопки) */
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-/* Плавное покачивание фоновых орбов */
-@keyframes orbFloat {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33%       { transform: translate(30px, -20px) scale(1.05); }
-  66%       { transform: translate(-20px, 30px) scale(0.97); }
-}
-
-
-/* ═══════════════════════════════════════════════
-   21. АДАПТИВНЫЙ ДИЗАЙН (Responsive Design)
-   Точки перелома:
-     — > 768px: десктопный вид (сайдбар всегда открыт)
-     — ≤ 768px: мобильный вид (сайдбар выезжает)
-═══════════════════════════════════════════════ */
-@media (max-width: 768px) {
-
-  /* На мобайл сайдбар становится выезжающей панелью */
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 100;
-    /* Скрыт за левым краем экрана */
-    transform: translateX(-100%);
-    box-shadow: var(--shadow-lg);
-  }
-
-  /* Когда сайдбар открыт — выезжает */
-  .sidebar--open {
-    transform: translateX(0);
-  }
-
-  /* Показываем кнопку закрытия сайдбара */
-  .sidebar__close-btn {
-    display: flex;
-  }
-
-  /* Оверлей виден только на мобайл */
-  .sidebar-overlay {
-    display: block;
-  }
-
-  /* Показываем кнопку-гамбургер */
-  .hamburger-btn {
-    display: flex;
-  }
-
-  /* Адаптируем быстрые подсказки под мобайл */
-  .quick-prompts {
-    grid-template-columns: 1fr;
-  }
-
-  /* Уменьшаем заголовок приветственного экрана */
-  .welcome-screen__title {
-    font-size: var(--text-xl);
-  }
-
-  .welcome-screen {
-    padding: 24px 16px 16px;
-  }
-
-  /* Уменьшаем отступы в шапке */
-  .chat-header {
-    padding: 0 12px;
-  }
-
-  /* Уменьшаем отступы в поле ввода */
-  .input-area {
-    padding: 10px 12px 12px;
-  }
-
-  /* Сообщения без лишних отступов */
-  .messages-list {
-    padding: 0 12px;
-  }
-
-  /* Toast уведомления — на всю ширину снизу */
-  .toast {
-    bottom: 16px;
-    right: 12px;
-    left: 12px;
-    max-width: none;
-    text-align: center;
-  }
-}
-
-/* Очень маленькие экраны */
-@media (max-width: 380px) {
-  .welcome-screen__title {
-    font-size: var(--text-lg);
-  }
-
-  .quick-prompt-btn {
-    font-size: 0.75rem;
-    padding: 10px 12px;
-  }
-}
-  .chat-header {
-    gap: 8px;
-  }/* Контейнер для пузырька бота + кнопки */
-.message-bot-wrapper {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-}
-
-/* Кнопка копирования */
-.copy-btn {
-  background: #e0e0e0;
-  border: none;
-  border-radius: 8px;
-  padding: 4px 8px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  opacity: 0.6;
-  line-height: 1;
-}
-
-.copy-btn:hover {
-  opacity: 1;
-  background: #d0d0d0;
-}
-
-.copy-btn:active {
-  transform: scale(0.95);
-}
-
-/* Чтобы пузырек бота оставался таким же, как был */
-.message--bot .message__bubble {
-  background: var(--msg-bot-bg, #f0f0f0);
-  color: var(--msg-bot-text, #333);
-  border-radius: 18px 18px 18px 4px;
-  padding: 8px 12px;
-  max-width: 70%;
-  word-wrap: break-word;
-}
-
-/* Сообщение пользователя (без кнопки) */
-.message--user .message__bubble {
-  background: var(--msg-user-bg, #007aff);
-  color: var(--msg-user-text, #fff);
-  border-radius: 18px 4px 18px 18px;
-  padding: 8px 12px;
-  max-width: 70%;
-  word-wrap: break-word;
-}
-
-/* Общий контейнер для сообщений */
-.message {
-  margin-bottom: 12px;
-  display: flex;
-}
-
-.message--user {
-  justify-cont 
-  /* Контейнер для сообщения бота с кнопкой */
-.message-bot-wrapper {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-}
-}
-/* Стиль кнопки копирования */
-.copy-btn {
-  background: #e0e0e0;
-  border: none;
-  border-radius: 8px;
-  padding: 6px 10px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  opacity: 0.7;
-  line-height: 1;
-  margin-bottom: 4px;
-}
-
-.copy-btn:hover {
-  opacity: 1;
-  background: #d0d0d0;
-  transform: scale(1.05);
-}
-
-.copy-btn:active {
-  transform: scale(0.95);
 }
